@@ -1,0 +1,31 @@
+@startuml
+'https://plantuml.com/class-diagram
+
+class InventoryManagementApplication {
+    main()
+    startApp()
+}
+InventoryManagementApplication --> InventoryManagementApplicationController
+
+class Item{
+    private String name
+    private double valueUSD
+    private String serialNumber
+}
+
+InventoryManagementApplicationController --> Inventory
+
+class Inventory{
+    private ArrayList<Item> inventoryData
+    private ObservableList<Item> observableInventoryData
+}
+
+Inventory-> Item
+
+class InventoryManagementApplicationController {
+    +getObservableInventoryData()
+    +saveList()
+    +loadList()
+}
+
+@enduml
