@@ -3,7 +3,7 @@
 
 class InventoryManagementApplication {
     main()
-    startApp()
+    start()
 }
 InventoryManagementApplication --> InventoryManagementApplicationController
 
@@ -13,16 +13,10 @@ class Item{
     private String serialNumber
 }
 
-InventoryManagementApplicationController --> Inventory
-
-class Inventory{
-    private ArrayList<Item> inventoryData
-    private ObservableList<Item> observableInventoryData
-}
-
-Inventory-> Item
+InventoryManagementApplicationController --> Item
 
 class InventoryManagementApplicationController {
+    +initialize()
     +getObservableInventoryData()
     +saveList()
     +loadList()

@@ -12,10 +12,12 @@ import javafx.stage.Stage;
 import java.io.IOException;
 
 public class InventoryManagementApplication extends Application {
+
+    //loads FXML window
     @Override
     public void start(Stage stage) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(InventoryManagementApplication.class.getResource("InventoryManagementApplication.fxml"));
-        Scene scene = new Scene(fxmlLoader.load(), 603, 624);
+        Scene scene = new Scene(fxmlLoader.load(), 687, 450);
         stage.setScene(scene);
         stage.show();
     }
