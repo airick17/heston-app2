@@ -47,6 +47,8 @@ public class InventoryManagementApplicationController implements Initializable {
     private ChoiceBox<String> searchByChoiceBox;
     @FXML
     private Button loadSelectedItemButton;
+    @FXML
+    private Button removeItemButton;
 
 
     //sets up table view collections
@@ -77,6 +79,13 @@ public class InventoryManagementApplicationController implements Initializable {
             refreshItemAddTextFields();
             addItemWarning.setText(null);
         }
+    }
+
+    //removes item from inventory List
+    @FXML
+    private void removeItemClick(ActionEvent e){
+        inventoryList.removeAll(inventoryTableView.getSelectionModel().getSelectedItem());
+        inventoryTableView.refresh();
     }
 
     //creates an item instance

@@ -61,7 +61,7 @@
       <TextField fx:id="priceTextField" layoutX="418.0" layoutY="378.0" prefHeight="25.0" prefWidth="90.0" promptText="price" />
       <Button fx:id="addItemButton" layoutX="76.0" layoutY="339.0" mnemonicParsing="false" onAction="#addItemClick" prefHeight="25.0" prefWidth="83.0" text="add item" />
       <Button fx:id="modifyButton" layoutX="178.0" layoutY="339.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="83.0" text="modify item" />
-      <Button layoutX="283.0" layoutY="339.0" mnemonicParsing="false" text="remove item" />
+      <Button fx:id="removeItemButton" layoutX="283.0" layoutY="339.0" mnemonicParsing="false" onAction="#removeItemClick" text="remove item" />
       <Pane layoutX="429.0" layoutY="293.0">
          <children>
             <TextField prefHeight="26.0" prefWidth="241.0" promptText="search for an item..." />
