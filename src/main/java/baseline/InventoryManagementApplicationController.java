@@ -14,6 +14,7 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Objects;
 import java.util.ResourceBundle;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -83,17 +84,78 @@ public class InventoryManagementApplicationController implements Initializable {
         }
     }
 
-    //removes item from inventory List
+    //removes item from inventory List by removing selected item
     @FXML
     private void removeItemClick(ActionEvent e){
         inventoryList.removeAll(inventoryTableView.getSelectionModel().getSelectedItem());
         inventoryTableView.refresh();
     }
 
+    //deletes all inventory items by clearing the list
     @FXML
     private void removeAllItems(ActionEvent e){
         inventoryList.clear();
         inventoryTableView.refresh();
+    }
+
+    //loads selected items data into the text fields, so it can be edited
+    @FXML
+    private void setLoadSelectedItemButtonClick(ActionEvent e){
+        serialNumberTextField.setText(inventoryTableView.getSelectionModel().getSelectedItem().getSerialNumberString());
+        nameTextField.setText(inventoryTableView.getSelectionModel().getSelectedItem().getItemName());
+        priceTextField.setText(inventoryTableView.getSelectionModel().getSelectedItem().getPrice());
+    }
+
+    //if item is loaded then text fields changed and modify button is clicked it will replace selected item with new data
+    //checks to make sure all text fields have info before modifying
+    //makes sure the text fields are changed before trying to modify item
+    @FXML
+    private void modifyItemClick(ActionEvent e){
+       if(serialNumberTextField.getText().isEmpty() || nameTextField.getText().isEmpty() || priceTextField.getText().isEmpty()){
+           addItemWarning.setText("Not enough information to modify item.");
+            }else if (Objects.equals(serialNumberTextField.getText(), inventoryTableView.getSelectionModel().getSelectedItem().getSerialNumberString())
+               && Objects.equals(nameTextField.getText(), inventoryTableView.getSelectionModel().getSelectedItem().getItemName())
+               && Objects.equals(priceTextField.getText(), inventoryTableView.getSelectionModel().getSelectedItem().getPrice())) {
+                    addItemWarning.setText("Information must be changed in order to modify the item.");
+                     }else if(serialNumberValidForMod() && nameValid() && priceValid()){
+                           inventoryTableView.getSelectionModel().getSelectedItem().setSerialNumberString(serialNumberTextField.getText());
+                           inventoryTableView.getSelectionModel().getSelectedItem().setItemName(nameTextField.getText());
+                           inventoryTableView.getSelectionModel().getSelectedItem().setPrice(priceTextField.getText());
+                           inventoryTableView.refresh();
+                           refreshItemAddTextFields();
+                           addItemWarning.setText(null);
+       }
+    }
+
+    //modified serialnumber validate
+    private boolean serialNumberValidForMod() {
+        final Pattern pattern = Pattern.compile("[A-Z]-[\\w][\\w][\\w]-[\\w][\\w][\\w]-[\\w][\\w][\\w]", Pattern.CASE_INSENSITIVE);
+        String serialNum = serialNumberTextField.getText().trim();
+        final Matcher matcher = pattern.matcher(serialNum);
+        if(checkIfSerialNumberExistsMod()){
+            return false;
+        }else if(matcher.matches()){
+            return true;
+        }else {
+            addItemWarning.setText("The serial number must be in the format (A-XXX-XXX-XXX).");
+            return false;
+        }
+    }
+
+    //checks for modifying only
+    private boolean checkIfSerialNumberExistsMod() {
+        //gets entered data
+        String serialNum = serialNumberTextField.getText().trim();
+        //makes a new array list equal to current inventoryList
+        ArrayList<Item> temp = new ArrayList<>(inventoryList);
+        //loops through inventory to check if the serial num already exists
+        for (Item item : temp) {
+            if (item.getSerialNumberString().contains(serialNum) && !serialNum.equals(inventoryTableView.getSelectionModel().getSelectedItem().getSerialNumberString())) {
+                addItemWarning.setText("The serial number entered already exists."); //warning label to user
+                return true;
+            }
+        }
+        return false;
     }
 
     //creates an item instance

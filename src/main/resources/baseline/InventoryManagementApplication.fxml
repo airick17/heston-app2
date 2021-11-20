@@ -60,7 +60,7 @@
       <TextField fx:id="nameTextField" layoutX="216.0" layoutY="378.0" prefHeight="25.0" prefWidth="178.0" promptText="name" />
       <TextField fx:id="priceTextField" layoutX="418.0" layoutY="378.0" prefHeight="25.0" prefWidth="90.0" promptText="price" />
       <Button fx:id="addItemButton" layoutX="76.0" layoutY="339.0" mnemonicParsing="false" onAction="#addItemClick" prefHeight="25.0" prefWidth="83.0" text="add item" />
-      <Button fx:id="modifyButton" layoutX="178.0" layoutY="339.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="83.0" text="modify item" />
+      <Button fx:id="modifyButton" layoutX="178.0" layoutY="339.0" mnemonicParsing="false" onAction="#modifyItemClick" prefHeight="25.0" prefWidth="83.0" text="modify item" />
       <Button fx:id="removeItemButton" layoutX="283.0" layoutY="339.0" mnemonicParsing="false" onAction="#removeItemClick" text="remove item" />
       <Pane layoutX="429.0" layoutY="293.0">
          <children>
@@ -84,6 +84,6 @@
             <Font size="18.0" />
          </font>
       </Label>
-      <Button fx:id="loadSelectedItemButton" layoutX="18.0" layoutY="295.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="230.0" text="Load Selected Item" />
+      <Button fx:id="loadSelectedItemButton" layoutX="18.0" layoutY="295.0" mnemonicParsing="false" onAction="#setLoadSelectedItemButtonClick" prefHeight="25.0" prefWidth="230.0" text="Load Selected Item" />
    </children>
 </AnchorPane>
