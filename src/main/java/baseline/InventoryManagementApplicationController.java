@@ -49,6 +49,8 @@ public class InventoryManagementApplicationController implements Initializable {
     private Button loadSelectedItemButton;
     @FXML
     private Button removeItemButton;
+    @FXML
+    private MenuItem removeAllMenuItem;
 
 
     //sets up table view collections
@@ -85,6 +87,12 @@ public class InventoryManagementApplicationController implements Initializable {
     @FXML
     private void removeItemClick(ActionEvent e){
         inventoryList.removeAll(inventoryTableView.getSelectionModel().getSelectedItem());
+        inventoryTableView.refresh();
+    }
+
+    @FXML
+    private void removeAllItems(ActionEvent e){
+        inventoryList.clear();
         inventoryTableView.refresh();
     }
 
@@ -163,5 +171,4 @@ public class InventoryManagementApplicationController implements Initializable {
         nameTextField.clear();
         priceTextField.clear();
     }
-
 }

@@ -38,7 +38,7 @@
           </Menu>
             <Menu mnemonicParsing="false" text="Edit">
               <items>
-                  <MenuItem mnemonicParsing="false" text="edit selected item" />
+                  <MenuItem fx:id="removeAllMenuItem" mnemonicParsing="false" onAction="#removeAllItems" text="remove all items " />
               </items>
             </Menu>
         </menus>
