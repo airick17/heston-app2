@@ -13,14 +13,9 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.FileChooser;
-
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.Objects;
-import java.util.ResourceBundle;
+import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -58,16 +53,12 @@ public class InventoryManagementApplicationController implements Initializable {
     @FXML
     private MenuItem removeAllMenuItem;
     @FXML
-    private MenuItem saveInventoryMenuItem;
-
-
+    private MenuItem saveInventoryTSVMenuItem;
+    @FXML
+    private MenuItem loadInventoryTSVMenuItem;
 
     //sets up table view collections
     ObservableList<Item> inventoryList = FXCollections.observableArrayList();
-
-    //change ?
-    //Item selectedItem = null;
-    //SortedList<Item> sortedItems;
 
     //sets up FXMl file
     @Override
@@ -136,6 +127,7 @@ public class InventoryManagementApplicationController implements Initializable {
     }
 
     //saves inventory as txt TSV file same as previous assignment save but \t instead of ,
+    //catches error if user closes file chooser and displays message
     @FXML
     private void saveListTSV() {
         FileChooser fc = new FileChooser();
@@ -152,8 +144,47 @@ public class InventoryManagementApplicationController implements Initializable {
                         + System.lineSeparator());
             }
             writer.close();
+            //clears warning after a successful save
+            addItemWarning.setText(null);
         } catch (IOException e) {
             e.printStackTrace();
+        }catch (NullPointerException e){
+            addItemWarning.setText("You did not save the file.");
+        }
+    }
+
+    //loads a TSV file
+    @FXML
+    private void loadListTSV() throws FileNotFoundException {
+        //new file chooser allows user to select file
+        FileChooser fc = new FileChooser();
+        fc.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("text files", "*.txt", "*.docx"));
+        fc.setTitle("Load");
+        File selectedFile = fc.showOpenDialog(null);
+
+        //this try catch catches the error that occurs if the user closes file chooser without selecting and displays message at bottom of window
+        try{
+            //temp array list to collect data to
+            ArrayList<Item> temp = new ArrayList<>();
+            Scanner scanFile = new Scanner(selectedFile.getAbsoluteFile());
+
+            //scanner scans until no more lines found each line is one item
+            while (scanFile.hasNext()){
+                String lineItem = scanFile.nextLine();
+                //new scanner to scan each line of the file with a tab delimiter set
+                Scanner scanLine = new Scanner(lineItem);
+                scanLine.useDelimiter("\t");
+                Item tempItem = new Item(scanLine.next(), scanLine.next(), scanLine.next());
+                temp.add(tempItem);
+            }
+            //clears the current inventory and sets inventory list to new temp list and updates table view
+            inventoryList.clear();
+            inventoryList.setAll(temp);
+            inventoryTableView.setItems(inventoryList);
+            //clears warning after successful load
+            addItemWarning.setText(null);
+        }catch (NullPointerException e){
+            addItemWarning.setText("You did not select a file to load.");
         }
     }
 
