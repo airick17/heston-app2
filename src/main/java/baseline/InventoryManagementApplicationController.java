@@ -20,44 +20,32 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class InventoryManagementApplicationController implements Initializable {
-
-    //fxml controls
-    @FXML
-    private TableView<Item> inventoryTableView;
-    @FXML
-    private TableColumn<Item, String> serialNumberColumn;
-    @FXML
-    private TableColumn<Item, String> nameColumn;
-    @FXML
-    private TableColumn<Item, String> priceColumn;
-    @FXML
-    private Button addItemButton;
-    @FXML
-    private TextField serialNumberTextField;
-    @FXML
-    private TextField nameTextField;
-    @FXML
-    private TextField priceTextField;
-    @FXML
-    private Label addItemWarning;
-    @FXML
-    private Button modifyButton;
-    @FXML
-    private Button searchButton;
-    @FXML
-    private ChoiceBox<String> searchByChoiceBox;
-    @FXML
-    private Button loadSelectedItemButton;
-    @FXML
-    private Button removeItemButton;
-    @FXML
-    private MenuItem removeAllMenuItem;
-    @FXML
-    private MenuItem saveInventoryTSVMenuItem;
-    @FXML
-    private MenuItem loadInventoryTSVMenuItem;
-    @FXML
-    private Label numberOfItemsCounter;
+    //tableview
+    @FXML private TableView<Item> inventoryTableView;
+    @FXML private TableColumn<Item, String> serialNumberColumn;
+    @FXML private TableColumn<Item, String> nameColumn;
+    @FXML private TableColumn<Item, String> priceColumn;
+    //choice box
+    @FXML private ChoiceBox<String> searchByChoiceBox;
+    //menus
+    @FXML private MenuItem removeAllMenuItem;
+    @FXML private MenuItem saveInventoryTSVMenuItem;
+    @FXML private MenuItem loadInventoryTSVMenuItem;
+    //text fields
+    @FXML private TextField serialNumberTextField;
+    @FXML private TextField nameTextField;
+    @FXML private TextField priceTextField;
+    @FXML private TextField searchTextField;
+    //buttons
+    @FXML private Button returnButton;
+    @FXML private Button modifyButton;
+    @FXML private Button searchButton;
+    @FXML private Button loadSelectedItemButton;
+    @FXML private Button removeItemButton;
+    @FXML private Button clearButton;
+    //labels
+    @FXML private Label numberOfItemsCounter;
+    @FXML private Label addItemWarning;
 
     //sets up table view collections
     ObservableList<Item> inventoryList = FXCollections.observableArrayList();
@@ -69,10 +57,8 @@ public class InventoryManagementApplicationController implements Initializable {
         serialNumberColumn.setCellValueFactory(new PropertyValueFactory<>("serialNumberString"));
         nameColumn.setCellValueFactory(new PropertyValueFactory<>("itemName"));
         priceColumn.setCellValueFactory(new PropertyValueFactory<>("price"));
-
         //sets up combo box
         searchByChoiceBox.getItems().addAll("Item Name", "Serial Number");
-
         //set counter 0 on start up
         numberOfItemsCounter.setText("0");
     }
@@ -141,6 +127,15 @@ public class InventoryManagementApplicationController implements Initializable {
        }
     }
 
+    @FXML
+    private void clearButtonClick (ActionEvent e){
+        searchTextField.clear();
+        serialNumberTextField.clear();
+        nameTextField.clear();
+        priceTextField.clear();
+        addItemWarning.setText(null);
+    }
+
     //saves inventory as txt TSV file same as previous assignment save but \t instead of ,
     //catches error if user closes file chooser and displays message
     @FXML
@@ -176,13 +171,11 @@ public class InventoryManagementApplicationController implements Initializable {
         fc.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("text files", "*.txt", "*.docx"));
         fc.setTitle("Load");
         File selectedFile = fc.showOpenDialog(null);
-
         //this try catch catches the error that occurs if the user closes file chooser without selecting and displays message at bottom of window
         try{
             //temp array list to collect data to
             ArrayList<Item> temp = new ArrayList<>();
             Scanner scanFile = new Scanner(selectedFile.getAbsoluteFile());
-
             //scanner scans until no more lines found each line is one item
             while (scanFile.hasNext()){
                 String lineItem = scanFile.nextLine();
@@ -202,6 +195,34 @@ public class InventoryManagementApplicationController implements Initializable {
             addItemWarning.setText("You did not select a file to load.");
         }
         counterSet();
+    }
+    
+    //searches according to choice box selection
+    @FXML
+    private void search(){
+        if(Objects.equals(searchByChoiceBox.getSelectionModel().getSelectedItem(), "Item Name")){
+            searchByName();
+        }else  if(Objects.equals(searchByChoiceBox.getSelectionModel().getSelectedItem(), "Serial Number")){
+            searchBySerialNumber();
+            //asks for serial number if user didn't enter anything, tells user if no item is found
+          if (!Objects.equals(inventoryTableView.getSelectionModel().getSelectedItem().getSerialNumberString(), searchTextField.getText().trim())){
+              addItemWarning.setText("That serial number does not match an item.");
+            }
+        }
+    }
+
+    //filters the table view for a serial number matching the search text field
+    //if it finds it is scrolls to that item and highlights it
+    private void searchBySerialNumber() {
+        inventoryTableView.getItems().stream().filter(item -> Objects.equals(item.getSerialNumberString(), searchTextField.getText().trim())).findFirst()
+                .ifPresent(item -> { inventoryTableView.getSelectionModel().select(item);
+                    inventoryTableView.scrollTo(item);
+                    addItemWarning.setText("Item found.");
+                });
+    }
+
+    private void searchByName() {
+        //TODO
     }
 
     //modified serialnumber validate
@@ -311,10 +332,10 @@ public class InventoryManagementApplicationController implements Initializable {
         priceTextField.clear();
     }
 
-    //sets counter on loaded list
-    //maybe can just be used instead of increment and decrement
+    //sets counter to size on inventory, used after load, add item, remove item
     private void counterSet(){
         int counter = inventoryList.size();
         numberOfItemsCounter.setText(String.valueOf(counter));
     }
+
 }

@@ -59,13 +59,13 @@
       <TextField fx:id="serialNumberTextField" layoutX="18.0" layoutY="378.0" prefHeight="25.0" prefWidth="178.0" promptText="serial number" />
       <TextField fx:id="nameTextField" layoutX="216.0" layoutY="378.0" prefHeight="25.0" prefWidth="178.0" promptText="name" />
       <TextField fx:id="priceTextField" layoutX="418.0" layoutY="378.0" prefHeight="25.0" prefWidth="90.0" promptText="price" />
-      <Button fx:id="addItemButton" layoutX="76.0" layoutY="339.0" mnemonicParsing="false" onAction="#addItemClick" prefHeight="25.0" prefWidth="83.0" text="add item" />
-      <Button fx:id="modifyButton" layoutX="178.0" layoutY="339.0" mnemonicParsing="false" onAction="#modifyItemClick" prefHeight="25.0" prefWidth="83.0" text="modify item" />
-      <Button fx:id="removeItemButton" layoutX="283.0" layoutY="339.0" mnemonicParsing="false" onAction="#removeItemClick" text="remove item" />
+      <Button fx:id="addItemButton" layoutX="76.0" layoutY="339.0" mnemonicParsing="false" onAction="#addItemClick" prefHeight="25.0" prefWidth="83.0" text="Add Item" />
+      <Button fx:id="modifyButton" layoutX="178.0" layoutY="339.0" mnemonicParsing="false" onAction="#modifyItemClick" prefHeight="25.0" prefWidth="83.0" text="Modify Item" />
+      <Button fx:id="removeItemButton" layoutX="283.0" layoutY="339.0" mnemonicParsing="false" onAction="#removeItemClick" text="Remove Item" />
       <Pane layoutX="429.0" layoutY="293.0">
          <children>
-            <TextField prefHeight="26.0" prefWidth="241.0" promptText="search for an item..." />
-            <Button fx:id="searchButton" layoutX="189.0" layoutY="30.0" mnemonicParsing="false" text="Search" />
+            <TextField fx:id="searchTextField" prefHeight="26.0" prefWidth="241.0" promptText="search for an item..." />
+            <Button fx:id="searchButton" layoutX="189.0" layoutY="30.0" mnemonicParsing="false" onAction="#search" text="Search" />
             <ChoiceBox fx:id="searchByChoiceBox" layoutX="39.0" layoutY="29.0" prefWidth="150.0" />
          </children>
       </Pane>
@@ -85,7 +85,9 @@
          </font>
       </Label>
       <Button fx:id="loadSelectedItemButton" layoutX="18.0" layoutY="295.0" mnemonicParsing="false" onAction="#setLoadSelectedItemButtonClick" prefHeight="25.0" prefWidth="230.0" text="Load Selected Item" />
-      <Label layoutX="463.0" layoutY="47.0" text="Number of inventory items:" />
-      <Label fx:id="numberOfItemsCounter" layoutX="615.0" layoutY="47.0" />
+      <Label layoutX="477.0" layoutY="56.0" text="Number of inventory items:" />
+      <Label fx:id="numberOfItemsCounter" alignment="CENTER" layoutX="629.0" layoutY="56.0" prefHeight="17.0" prefWidth="40.0" />
+      <Button fx:id="returnButton" layoutX="325.0" layoutY="295.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="97.0" text="Return" />
+      <Button fx:id="clearButton" layoutX="524.0" layoutY="377.0" mnemonicParsing="false" onAction="#clearButtonClick" prefHeight="25.0" prefWidth="64.0" text="Clear" />
    </children>
 </AnchorPane>
