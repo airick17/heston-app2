@@ -98,11 +98,18 @@ public class InventoryManagementApplicationController implements Initializable {
     }
 
     //loads selected items data into the text fields, so it can be edited
+    //catches error if no selection is made before clicking button and gives user an error
+    //clears label when item is successfully loaded
     @FXML
     private void setLoadSelectedItemButtonClick(ActionEvent e){
-        serialNumberTextField.setText(inventoryTableView.getSelectionModel().getSelectedItem().getSerialNumberString());
-        nameTextField.setText(inventoryTableView.getSelectionModel().getSelectedItem().getItemName());
-        priceTextField.setText(inventoryTableView.getSelectionModel().getSelectedItem().getPrice());
+        try {
+            serialNumberTextField.setText(inventoryTableView.getSelectionModel().getSelectedItem().getSerialNumberString());
+            nameTextField.setText(inventoryTableView.getSelectionModel().getSelectedItem().getItemName());
+            priceTextField.setText(inventoryTableView.getSelectionModel().getSelectedItem().getPrice());
+            addItemWarning.setText(null);
+        }catch (NullPointerException f){
+            addItemWarning.setText("You did not select an item to load.");
+        }
     }
 
     //if item is loaded then text fields changed and modify button is clicked it will replace selected item with new data
@@ -111,11 +118,11 @@ public class InventoryManagementApplicationController implements Initializable {
     @FXML
     private void modifyItemClick(ActionEvent e){
        if(serialNumberTextField.getText().isEmpty() || nameTextField.getText().isEmpty() || priceTextField.getText().isEmpty()){
-           addItemWarning.setText("Not enough information to modify item.");
+           addItemWarning.setText("You did not load an item to modify.");
             }else if (Objects.equals(serialNumberTextField.getText(), inventoryTableView.getSelectionModel().getSelectedItem().getSerialNumberString())
                && Objects.equals(nameTextField.getText(), inventoryTableView.getSelectionModel().getSelectedItem().getItemName())
                && Objects.equals(priceTextField.getText(), inventoryTableView.getSelectionModel().getSelectedItem().getPrice())) {
-                    addItemWarning.setText("Information must be changed in order to modify the item.");
+                    addItemWarning.setText("Item information must be changed in order to modify the item.");
                      }else if(serialNumberValidForMod() && nameValid() && priceValid()){
                            inventoryTableView.getSelectionModel().getSelectedItem().setSerialNumberString(serialNumberTextField.getText());
                            inventoryTableView.getSelectionModel().getSelectedItem().setItemName(nameTextField.getText());
