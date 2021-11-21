@@ -56,6 +56,8 @@ public class InventoryManagementApplicationController implements Initializable {
     private MenuItem saveInventoryTSVMenuItem;
     @FXML
     private MenuItem loadInventoryTSVMenuItem;
+    @FXML
+    private Label numberOfItemsCounter;
 
     //sets up table view collections
     ObservableList<Item> inventoryList = FXCollections.observableArrayList();
@@ -70,6 +72,9 @@ public class InventoryManagementApplicationController implements Initializable {
 
         //sets up combo box
         searchByChoiceBox.getItems().addAll("Item Name", "Serial Number");
+
+        //set counter 0 on start up
+        numberOfItemsCounter.setText("0");
     }
 
     //creates an item from the text fields and adds it to saved list then updates table view
@@ -81,6 +86,7 @@ public class InventoryManagementApplicationController implements Initializable {
             refreshItemAddTextFields();
             addItemWarning.setText(null);
         }
+        counterSet();
     }
 
     //removes item from inventory List by removing selected item
@@ -88,6 +94,7 @@ public class InventoryManagementApplicationController implements Initializable {
     private void removeItemClick(ActionEvent e){
         inventoryList.removeAll(inventoryTableView.getSelectionModel().getSelectedItem());
         inventoryTableView.refresh();
+        counterSet();
     }
 
     //deletes all inventory items by clearing the list
@@ -95,6 +102,7 @@ public class InventoryManagementApplicationController implements Initializable {
     private void removeAllItems(ActionEvent e){
         inventoryList.clear();
         inventoryTableView.refresh();
+        numberOfItemsCounter.setText("0");
     }
 
     //loads selected items data into the text fields, so it can be edited
@@ -193,6 +201,7 @@ public class InventoryManagementApplicationController implements Initializable {
         }catch (NullPointerException e){
             addItemWarning.setText("You did not select a file to load.");
         }
+        counterSet();
     }
 
     //modified serialnumber validate
@@ -300,5 +309,12 @@ public class InventoryManagementApplicationController implements Initializable {
         serialNumberTextField.clear();
         nameTextField.clear();
         priceTextField.clear();
+    }
+
+    //sets counter on loaded list
+    //maybe can just be used instead of increment and decrement
+    private void counterSet(){
+        int counter = inventoryList.size();
+        numberOfItemsCounter.setText(String.valueOf(counter));
     }
 }

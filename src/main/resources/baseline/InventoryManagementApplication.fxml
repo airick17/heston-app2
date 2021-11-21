@@ -85,5 +85,7 @@
          </font>
       </Label>
       <Button fx:id="loadSelectedItemButton" layoutX="18.0" layoutY="295.0" mnemonicParsing="false" onAction="#setLoadSelectedItemButtonClick" prefHeight="25.0" prefWidth="230.0" text="Load Selected Item" />
+      <Label layoutX="463.0" layoutY="47.0" text="Number of inventory items:" />
+      <Label fx:id="numberOfItemsCounter" layoutX="615.0" layoutY="47.0" />
    </children>
 </AnchorPane>
