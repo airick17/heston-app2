@@ -25,7 +25,7 @@
         <menus>
           <Menu mnemonicParsing="false" text="File">
             <items>
-              <MenuItem mnemonicParsing="false" text="save inventory" />
+              <MenuItem fx:id="saveInventoryMenuItem" mnemonicParsing="false" onAction="#saveListTSV" text="save inventory" />
                   <MenuItem mnemonicParsing="false" text="load inventory" />
             </items>
           </Menu>

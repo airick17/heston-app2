@@ -12,6 +12,11 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.stage.FileChooser;
+
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Objects;
@@ -52,6 +57,9 @@ public class InventoryManagementApplicationController implements Initializable {
     private Button removeItemButton;
     @FXML
     private MenuItem removeAllMenuItem;
+    @FXML
+    private MenuItem saveInventoryMenuItem;
+
 
 
     //sets up table view collections
@@ -125,6 +133,28 @@ public class InventoryManagementApplicationController implements Initializable {
                            refreshItemAddTextFields();
                            addItemWarning.setText(null);
        }
+    }
+
+    //saves inventory as txt TSV file same as previous assignment save but \t instead of ,
+    @FXML
+    private void saveListTSV() {
+        FileChooser fc = new FileChooser();
+        fc.setTitle("Save");
+        fc.setInitialFileName("InventoryList");
+        fc.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("txt files", "*.txt"));
+        try {
+            File selectedFile = fc.showSaveDialog(null);
+            FileWriter writer = new FileWriter(selectedFile.getPath());
+            for (Item item : inventoryList) {
+                writer.write(item.getSerialNumberString()
+                        + "\t" + item.getItemName()
+                        + "\t" + item.getPrice()
+                        + System.lineSeparator());
+            }
+            writer.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     //modified serialnumber validate
