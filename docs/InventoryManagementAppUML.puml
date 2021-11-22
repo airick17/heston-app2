@@ -11,15 +11,51 @@ class Item{
     private String name
     private double valueUSD
     private String serialNumber
+
+    +getSerialNumberString()
+    +setSerialNumberString()
+    +getItemName()
+    +setItemName()
+    +getPrice()
+    +setPrice()
+
 }
 
 InventoryManagementApplicationController --> Item
 
 class InventoryManagementApplicationController {
     +initialize()
-    +getObservableInventoryData()
-    +saveList()
-    +loadList()
+    -addItemClick()
+    -saveList()
+    -loadList()
+    -removeItemClick()
+    -removeAllItems()
+    -setLoadSelectedItemButtonClick()
+    -modifyItemClick()
+    -clearButtonClick()
+    -saveListTSV()
+    -loadListTSV()
+    -returnButtonClick()
+    -search()
+    -searchByName()
+    -searchBySerialNumber()
+    -serialNumberValidForMod()
+    -checkIfSerialNumberExists()
+    -Item createItem()
+    -priceValid()
+    -nameValid()
+    -checkNameError()
+    -checkIfSerialNumberExistsMod()
+    -serialNumberValid()
+    -refreshItemAddTextFields()
+    -counterSet()
+
+
+
+
+
+
+
 }
 
 @enduml
