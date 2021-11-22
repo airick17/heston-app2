@@ -89,5 +89,6 @@
       <Label fx:id="numberOfItemsCounter" alignment="CENTER" layoutX="629.0" layoutY="56.0" prefHeight="17.0" prefWidth="40.0" />
       <Button fx:id="returnButton" layoutX="325.0" layoutY="295.0" mnemonicParsing="false" onAction="#returnButtonClick" prefHeight="25.0" prefWidth="97.0" text="Return" />
       <Button fx:id="clearButton" layoutX="524.0" layoutY="377.0" mnemonicParsing="false" onAction="#clearButtonClick" prefHeight="25.0" prefWidth="64.0" text="Clear" />
+      <Label layoutX="408.0" layoutY="330.0" text="Search by:" />
    </children>
 </AnchorPane>

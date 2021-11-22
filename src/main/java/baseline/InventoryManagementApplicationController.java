@@ -170,7 +170,7 @@ public class InventoryManagementApplicationController implements Initializable {
             for (Item item : inventoryList) {
                 writer.write(item.getSerialNumberString()
                         + "\t" + item.getItemName()
-                        + "\t" + item.getPrice()
+                        + "\t$" + item.getPrice()
                         + System.lineSeparator());
             }
             writer.close();
@@ -202,7 +202,7 @@ public class InventoryManagementApplicationController implements Initializable {
                 //new scanner to scan each line of the file with a tab delimiter set
                 Scanner scanLine = new Scanner(lineItem);
                 scanLine.useDelimiter("\t");
-                Item tempItem = new Item(scanLine.next(), scanLine.next(), scanLine.next());
+                Item tempItem = new Item(scanLine.next(), scanLine.next(), scanLine.next().replace("$",""));
                 temp.add(tempItem);
             }
             //clears the current inventory and sets inventory list to new temp list and updates table view
@@ -233,10 +233,12 @@ public class InventoryManagementApplicationController implements Initializable {
         //if serial number search is selected
         } else if (Objects.equals(searchByChoiceBox.getSelectionModel().getSelectedItem(), "Serial Number")) {
             searchBySerialNumber();
+        }else {
+            addItemWarning.setText("Please select a search option: ");
         }
     }
 
-    //finds matching item by name and selects it in the table
+    //finds matching items by name
     private void searchByName() {
         ObservableList<Item> searchedList = FXCollections.observableArrayList();
         String searchString = searchTextField.getText().trim();
@@ -245,7 +247,7 @@ public class InventoryManagementApplicationController implements Initializable {
                 searchedList.add(item);
             }
         }
-        // if search finds nothing
+        //checks if item was found or not and sets table view to new list if it is found
         if(!searchedList.isEmpty()){
             inventoryTableView.setItems(searchedList);
             addItemWarning.setText("Item(s) found.");
@@ -253,9 +255,9 @@ public class InventoryManagementApplicationController implements Initializable {
             addItemWarning.setText("That name does not match an item.");
     }
 
-    //filters the table view for a serial number matching the search text field
-    //if it finds it is scrolls to that item and highlights it
+    //finds matching items by serial number
     private void searchBySerialNumber() {
+        //new observable list to collect matching items
         ObservableList<Item> searchedList = FXCollections.observableArrayList();
         String searchString = searchTextField.getText().trim();
         for (Item item : inventoryList) {
@@ -263,7 +265,7 @@ public class InventoryManagementApplicationController implements Initializable {
                 searchedList.add(item);
             }
         }
-        // inventoryTableView.getItems().stream().filter(item -> Objects.equals(item.getItemName(), searchString)).findAny().ifPresent(searchedList::add);
+       //checks if item was found or not and sets table view to new list if it is found
         if(!searchedList.isEmpty()){
             inventoryTableView.setItems(searchedList);
             addItemWarning.setText("Item found.");
