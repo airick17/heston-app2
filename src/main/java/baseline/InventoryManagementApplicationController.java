@@ -70,7 +70,7 @@ public class InventoryManagementApplicationController implements Initializable {
     //sets up table view collections
     ObservableList<Item> inventoryList = FXCollections.observableArrayList();
 
-    //sets up FXMl file
+    //sets up FXMl file / window
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         //sets up table columns

@@ -29,13 +29,6 @@
                   <MenuItem fx:id="loadInventoryTSVMenuItem" mnemonicParsing="false" onAction="#loadListTSV" text="load inventory as TSV" />
             </items>
           </Menu>
-          <Menu mnemonicParsing="false" text="View">
-            <items>
-              <MenuItem mnemonicParsing="false" text="sort by value" />
-                  <MenuItem mnemonicParsing="false" text="sort by name" />
-                  <MenuItem mnemonicParsing="false" text="sort by serial number" />
-            </items>
-          </Menu>
             <Menu mnemonicParsing="false" text="Edit">
               <items>
                   <MenuItem fx:id="removeAllMenuItem" mnemonicParsing="false" onAction="#removeAllItems" text="remove all items " />
