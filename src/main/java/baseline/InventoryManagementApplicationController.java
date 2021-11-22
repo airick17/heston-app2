@@ -21,31 +21,51 @@ import java.util.regex.Pattern;
 
 public class InventoryManagementApplicationController implements Initializable {
     //tableview
-    @FXML private TableView<Item> inventoryTableView;
-    @FXML private TableColumn<Item, String> serialNumberColumn;
-    @FXML private TableColumn<Item, String> nameColumn;
-    @FXML private TableColumn<Item, String> priceColumn;
+    @FXML
+    private TableView<Item> inventoryTableView;
+    @FXML
+    private TableColumn<Item, String> serialNumberColumn;
+    @FXML
+    private TableColumn<Item, String> nameColumn;
+    @FXML
+    private TableColumn<Item, String> priceColumn;
     //choice box
-    @FXML private ChoiceBox<String> searchByChoiceBox;
+    @FXML
+    private ChoiceBox<String> searchByChoiceBox;
     //menus
-    @FXML private MenuItem removeAllMenuItem;
-    @FXML private MenuItem saveInventoryTSVMenuItem;
-    @FXML private MenuItem loadInventoryTSVMenuItem;
+    @FXML
+    private MenuItem removeAllMenuItem;
+    @FXML
+    private MenuItem saveInventoryTSVMenuItem;
+    @FXML
+    private MenuItem loadInventoryTSVMenuItem;
     //text fields
-    @FXML private TextField serialNumberTextField;
-    @FXML private TextField nameTextField;
-    @FXML private TextField priceTextField;
-    @FXML private TextField searchTextField;
+    @FXML
+    private TextField serialNumberTextField;
+    @FXML
+    private TextField nameTextField;
+    @FXML
+    private TextField priceTextField;
+    @FXML
+    private TextField searchTextField;
     //buttons
-    @FXML private Button returnButton;
-    @FXML private Button modifyButton;
-    @FXML private Button searchButton;
-    @FXML private Button loadSelectedItemButton;
-    @FXML private Button removeItemButton;
-    @FXML private Button clearButton;
+    @FXML
+    private Button returnButton;
+    @FXML
+    private Button modifyButton;
+    @FXML
+    private Button searchButton;
+    @FXML
+    private Button loadSelectedItemButton;
+    @FXML
+    private Button removeItemButton;
+    @FXML
+    private Button clearButton;
     //labels
-    @FXML private Label numberOfItemsCounter;
-    @FXML private Label addItemWarning;
+    @FXML
+    private Label numberOfItemsCounter;
+    @FXML
+    private Label addItemWarning;
 
     //sets up table view collections
     ObservableList<Item> inventoryList = FXCollections.observableArrayList();
@@ -66,7 +86,7 @@ public class InventoryManagementApplicationController implements Initializable {
     //creates an item from the text fields and adds it to saved list then updates table view
     @FXML
     private void addItemClick(ActionEvent e) {
-        if(createItem() != null){
+        if (createItem() != null) {
             inventoryList.addAll(createItem());
             inventoryTableView.setItems(inventoryList);
             refreshItemAddTextFields();
@@ -77,7 +97,7 @@ public class InventoryManagementApplicationController implements Initializable {
 
     //removes item from inventory List by removing selected item
     @FXML
-    private void removeItemClick(ActionEvent e){
+    private void removeItemClick(ActionEvent e) {
         inventoryList.removeAll(inventoryTableView.getSelectionModel().getSelectedItem());
         inventoryTableView.refresh();
         counterSet();
@@ -85,7 +105,7 @@ public class InventoryManagementApplicationController implements Initializable {
 
     //deletes all inventory items by clearing the list
     @FXML
-    private void removeAllItems(ActionEvent e){
+    private void removeAllItems(ActionEvent e) {
         inventoryList.clear();
         inventoryTableView.refresh();
         numberOfItemsCounter.setText("0");
@@ -95,13 +115,13 @@ public class InventoryManagementApplicationController implements Initializable {
     //catches error if no selection is made before clicking button and gives user an error
     //clears label when item is successfully loaded
     @FXML
-    private void setLoadSelectedItemButtonClick(ActionEvent e){
+    private void setLoadSelectedItemButtonClick(ActionEvent e) {
         try {
             serialNumberTextField.setText(inventoryTableView.getSelectionModel().getSelectedItem().getSerialNumberString());
             nameTextField.setText(inventoryTableView.getSelectionModel().getSelectedItem().getItemName());
             priceTextField.setText(inventoryTableView.getSelectionModel().getSelectedItem().getPrice());
             addItemWarning.setText(null);
-        }catch (NullPointerException f){
+        } catch (NullPointerException f) {
             addItemWarning.setText("You did not select an item to load.");
         }
     }
@@ -110,25 +130,25 @@ public class InventoryManagementApplicationController implements Initializable {
     //checks to make sure all text fields have info before modifying
     //makes sure the text fields are changed before trying to modify item
     @FXML
-    private void modifyItemClick(ActionEvent e){
-       if(serialNumberTextField.getText().isEmpty() || nameTextField.getText().isEmpty() || priceTextField.getText().isEmpty()){
-           addItemWarning.setText("You did not load an item to modify.");
-            }else if (Objects.equals(serialNumberTextField.getText(), inventoryTableView.getSelectionModel().getSelectedItem().getSerialNumberString())
-               && Objects.equals(nameTextField.getText(), inventoryTableView.getSelectionModel().getSelectedItem().getItemName())
-               && Objects.equals(priceTextField.getText(), inventoryTableView.getSelectionModel().getSelectedItem().getPrice())) {
-                    addItemWarning.setText("Item information must be changed in order to modify the item.");
-                     }else if(serialNumberValidForMod() && nameValid() && priceValid()){
-                           inventoryTableView.getSelectionModel().getSelectedItem().setSerialNumberString(serialNumberTextField.getText());
-                           inventoryTableView.getSelectionModel().getSelectedItem().setItemName(nameTextField.getText());
-                           inventoryTableView.getSelectionModel().getSelectedItem().setPrice(priceTextField.getText());
-                           inventoryTableView.refresh();
-                           refreshItemAddTextFields();
-                           addItemWarning.setText(null);
-       }
+    private void modifyItemClick(ActionEvent e) {
+        if (serialNumberTextField.getText().isEmpty() || nameTextField.getText().isEmpty() || priceTextField.getText().isEmpty()) {
+            addItemWarning.setText("You did not load an item to modify.");
+        } else if (Objects.equals(serialNumberTextField.getText(), inventoryTableView.getSelectionModel().getSelectedItem().getSerialNumberString())
+                && Objects.equals(nameTextField.getText(), inventoryTableView.getSelectionModel().getSelectedItem().getItemName())
+                && Objects.equals(priceTextField.getText(), inventoryTableView.getSelectionModel().getSelectedItem().getPrice())) {
+            addItemWarning.setText("Item information must be changed in order to modify the item.");
+        } else if (serialNumberValidForMod() && nameValid() && priceValid()) {
+            inventoryTableView.getSelectionModel().getSelectedItem().setSerialNumberString(serialNumberTextField.getText());
+            inventoryTableView.getSelectionModel().getSelectedItem().setItemName(nameTextField.getText());
+            inventoryTableView.getSelectionModel().getSelectedItem().setPrice(priceTextField.getText());
+            inventoryTableView.refresh();
+            refreshItemAddTextFields();
+            addItemWarning.setText(null);
+        }
     }
 
     @FXML
-    private void clearButtonClick (ActionEvent e){
+    private void clearButtonClick(ActionEvent e) {
         searchTextField.clear();
         serialNumberTextField.clear();
         nameTextField.clear();
@@ -158,7 +178,7 @@ public class InventoryManagementApplicationController implements Initializable {
             addItemWarning.setText(null);
         } catch (IOException e) {
             e.printStackTrace();
-        }catch (NullPointerException e){
+        } catch (NullPointerException e) {
             addItemWarning.setText("You did not save the file.");
         }
     }
@@ -172,12 +192,12 @@ public class InventoryManagementApplicationController implements Initializable {
         fc.setTitle("Load");
         File selectedFile = fc.showOpenDialog(null);
         //this try catch catches the error that occurs if the user closes file chooser without selecting and displays message at bottom of window
-        try{
+        try {
             //temp array list to collect data to
             ArrayList<Item> temp = new ArrayList<>();
             Scanner scanFile = new Scanner(selectedFile.getAbsoluteFile());
             //scanner scans until no more lines found each line is one item
-            while (scanFile.hasNext()){
+            while (scanFile.hasNext()) {
                 String lineItem = scanFile.nextLine();
                 //new scanner to scan each line of the file with a tab delimiter set
                 Scanner scanLine = new Scanner(lineItem);
@@ -191,38 +211,64 @@ public class InventoryManagementApplicationController implements Initializable {
             inventoryTableView.setItems(inventoryList);
             //clears warning after successful load
             addItemWarning.setText(null);
-        }catch (NullPointerException e){
+        } catch (NullPointerException e) {
             addItemWarning.setText("You did not select a file to load.");
         }
         counterSet();
     }
-    
+
+    //resets table view to full inventory list
+    @FXML
+    private void returnButtonClick(ActionEvent e) {
+        inventoryTableView.setItems(inventoryList);
+    }
+
     //searches according to choice box selection
     @FXML
-    private void search(){
-        if(Objects.equals(searchByChoiceBox.getSelectionModel().getSelectedItem(), "Item Name")){
+    private void search() {
+        addItemWarning.setText(null);
+        //if item name search is selected
+        if (Objects.equals(searchByChoiceBox.getSelectionModel().getSelectedItem(), "Item Name")) {
             searchByName();
-        }else  if(Objects.equals(searchByChoiceBox.getSelectionModel().getSelectedItem(), "Serial Number")){
+        //if serial number search is selected
+        } else if (Objects.equals(searchByChoiceBox.getSelectionModel().getSelectedItem(), "Serial Number")) {
             searchBySerialNumber();
-            //asks for serial number if user didn't enter anything, tells user if no item is found
-          if (!Objects.equals(inventoryTableView.getSelectionModel().getSelectedItem().getSerialNumberString(), searchTextField.getText().trim())){
-              addItemWarning.setText("That serial number does not match an item.");
+        }
+    }
+
+    //finds matching item by name and selects it in the table
+    private void searchByName() {
+        ObservableList<Item> searchedList = FXCollections.observableArrayList();
+        String searchString = searchTextField.getText().trim();
+        for (Item item : inventoryList) {
+            if (Objects.equals(item.getItemName(), searchString)) {
+                searchedList.add(item);
             }
         }
+        // if search finds nothing
+        if(!searchedList.isEmpty()){
+            inventoryTableView.setItems(searchedList);
+            addItemWarning.setText("Item(s) found.");
+        }else
+            addItemWarning.setText("That name does not match an item.");
     }
 
     //filters the table view for a serial number matching the search text field
     //if it finds it is scrolls to that item and highlights it
     private void searchBySerialNumber() {
-        inventoryTableView.getItems().stream().filter(item -> Objects.equals(item.getSerialNumberString(), searchTextField.getText().trim())).findFirst()
-                .ifPresent(item -> { inventoryTableView.getSelectionModel().select(item);
-                    inventoryTableView.scrollTo(item);
-                    addItemWarning.setText("Item found.");
-                });
-    }
-
-    private void searchByName() {
-        //TODO
+        ObservableList<Item> searchedList = FXCollections.observableArrayList();
+        String searchString = searchTextField.getText().trim();
+        for (Item item : inventoryList) {
+            if (Objects.equals(item.getSerialNumberString(), searchString)) {
+                searchedList.add(item);
+            }
+        }
+        // inventoryTableView.getItems().stream().filter(item -> Objects.equals(item.getItemName(), searchString)).findAny().ifPresent(searchedList::add);
+        if(!searchedList.isEmpty()){
+            inventoryTableView.setItems(searchedList);
+            addItemWarning.setText("Item found.");
+        }else
+            addItemWarning.setText("That serial number does not match an item.");
     }
 
     //modified serialnumber validate

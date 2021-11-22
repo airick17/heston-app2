@@ -87,7 +87,7 @@
       <Button fx:id="loadSelectedItemButton" layoutX="18.0" layoutY="295.0" mnemonicParsing="false" onAction="#setLoadSelectedItemButtonClick" prefHeight="25.0" prefWidth="230.0" text="Load Selected Item" />
       <Label layoutX="477.0" layoutY="56.0" text="Number of inventory items:" />
       <Label fx:id="numberOfItemsCounter" alignment="CENTER" layoutX="629.0" layoutY="56.0" prefHeight="17.0" prefWidth="40.0" />
-      <Button fx:id="returnButton" layoutX="325.0" layoutY="295.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="97.0" text="Return" />
+      <Button fx:id="returnButton" layoutX="325.0" layoutY="295.0" mnemonicParsing="false" onAction="#returnButtonClick" prefHeight="25.0" prefWidth="97.0" text="Return" />
       <Button fx:id="clearButton" layoutX="524.0" layoutY="377.0" mnemonicParsing="false" onAction="#clearButtonClick" prefHeight="25.0" prefWidth="64.0" text="Clear" />
    </children>
 </AnchorPane>
