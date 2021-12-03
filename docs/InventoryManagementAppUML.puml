@@ -9,8 +9,8 @@ InventoryManagementApplication --> InventoryManagementApplicationController
 
 class Item{
     private String name
-    private double valueUSD
     private String serialNumber
+    private String price
 
     +getSerialNumberString()
     +setSerialNumberString()

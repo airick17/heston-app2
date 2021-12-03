@@ -1,3 +1,5 @@
+Code Explanation / Demonstration Video: https://youtu.be/6bas49EsF_Q
+
 User Guide:
 
 This is an inventory management application. It allows you to create an inventory of items that have a unique serial
